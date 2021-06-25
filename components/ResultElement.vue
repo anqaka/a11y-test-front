@@ -11,15 +11,9 @@
       <c-box>
         <CText fontSize="sm">Tested Url</CText>
         <CText fontWeight="800" py="2" is-truncated>
-          {{ item.testedUrl }}</CText
-        >
+          {{ item.testedUrl }}
+        </CText>
       </c-box>
-      <!-- <c-box>
-        <CText fontSize="sm">Url Category</CText>
-        <CText fontWeight="800" py="2" is-truncated>
-          {{ item.urlCategory }}</CText
-        >
-      </c-box> -->
       <c-box>
         <CText fontSize="sm">Category</CText>
         <CText fontWeight="800" py="2"> {{ item.category }}</CText>
@@ -84,8 +78,8 @@
             color="blue.400"
             is-external
           >
-            {{ item.helpUrl }}</CLink
-          >
+            {{ item.helpUrl }}
+          </CLink>
         </c-grid-item>
       </c-grid>
     </c-box>
@@ -120,27 +114,21 @@
 <script>
 import {
   CBox,
-  CFlex,
   CSimpleGrid,
   CText,
   CLink,
   CGrid,
-  CGridItem,
-  CDivider,
-  CHeading
+  CGridItem
 } from '@chakra-ui/vue'
 
 export default {
   components: {
     CBox,
-    CFlex,
     CSimpleGrid,
     CText,
     CLink,
     CGrid,
-    CGridItem,
-    CDivider,
-    CHeading
+    CGridItem
   },
 
   props: {
@@ -150,10 +138,10 @@ export default {
     }
   },
 
-  data() {
+  data () {
     return {
       show: false
-    };
+    }
   }
-};
+}
 </script>

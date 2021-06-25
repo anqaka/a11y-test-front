@@ -8,8 +8,8 @@
         <CFormControl py="2" isRequired>
           <c-form-label for="pages">Pages</c-form-label>
           <c-textarea placeholder="Pages" id="pages" v-model="form.pages" />
-          <c-form-helper-text
-            >Please divide pages with comma and space
+          <c-form-helper-text>
+            Please divide pages separated with comma and space, without quotes
           </c-form-helper-text>
         </CFormControl>
         <c-box>
@@ -28,10 +28,21 @@
           <CFormControl py="2">
             <c-form-label for="resultsDir">Results dir</c-form-label>
             <c-input
-              placeholder="Title"
+              placeholder="Result directory name"
               id="resultsDir"
               v-model="form.resultsDir"
             />
+          </CFormControl>
+          <CFormControl py="2">
+            <c-form-label for="selector">HTML Selector</c-form-label>
+            <c-input
+              placeholder="Html selector"
+              id="selector"
+              v-model="form.selector"
+            />
+            <c-form-helper-text>
+              use .class or #id to choose selector to test, just one selector allowed
+            </c-form-helper-text>
           </CFormControl>
         </c-box>
       </c-simple-grid>
@@ -142,7 +153,7 @@ export default {
     CSimpleGrid
   },
 
-  data() {
+  data () {
     return {
       form: {
         pages: null,
@@ -161,19 +172,19 @@ export default {
           height: null
         }
       }
-    };
+    }
   },
 
   computed: {
-    disabled() {
+    disabled () {
       return (
         !this.form.pages
-      );
+      )
     }
   },
 
   methods: {
-    onSubmit() {
+    onSubmit () {
       const form = this.form
       const data = {
         ...form,
@@ -183,18 +194,20 @@ export default {
         resultsDir: form.resultsDir || undefined,
         basicAuth:
           form.basicAuth.username && form.basicAuth.password
-            ? form.basicAuth : undefined,
+            ? form.basicAuth
+            : undefined,
         axeConfig: form.axeConfig.reporter ? form.axeConfig : undefined,
         viewport:
           form.viewport.width && form.viewport.height
             ? form.viewport
-            : undefined
+            : undefined,
+        selector: form.selector || undefined
       }
       this.$emit('submit', data)
       this.clear()
     },
 
-    clear() {
+    clear () {
       this.form = {
         pages: null,
         title: null,
@@ -210,7 +223,8 @@ export default {
         viewport: {
           width: null,
           height: null
-        }
+        },
+        selector: null
       }
     }
   }
