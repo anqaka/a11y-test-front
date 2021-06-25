@@ -10,27 +10,27 @@
         boxShadow=" 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
         mb="4"
       >
-        <CSimpleGrid columns="6" mb="4" p="4" bg="gray.200">
+        <CSimpleGrid :columns="[1, null, 3, 6]" mb="4" p="4" bg="gray.200">
           <c-box>
             <CText fontSize="sm">Id</CText>
-            <CText fontWeight="800" pt="2">{{ item.id }}</CText>
+            <CText fontWeight="800" py="2">{{ item.id }}</CText>
           </c-box>
 
           <c-box>
             <CText fontSize="sm">Tested Url</CText>
-            <CText fontWeight="800" pt="2"> {{ item.testedUrl }}</CText>
+            <CText fontWeight="800" py="2" is-truncated> {{ item.testedUrl }}</CText>
           </c-box>
           <c-box>
             <CText fontSize="sm">Url Category</CText>
-            <CText fontWeight="800" pt="2"> {{ item.urlCategory }}</CText>
+            <CText fontWeight="800" py="2" is-truncated> {{ item.urlCategory }}</CText>
           </c-box>
           <c-box>
             <CText fontSize="sm">Category</CText>
-            <CText fontWeight="800" pt="2"> {{ item.category }}</CText>
+            <CText fontWeight="800" py="2"> {{ item.category }}</CText>
           </c-box>
           <c-box>
             <CText fontSize="sm">Impact</CText>
-            <CText fontWeight="800" pt="2"> {{ item.impact }}</CText>
+            <CText fontWeight="800" py="2"> {{ item.impact }}</CText>
           </c-box>
           <c-box>
             <CText fontSize="sm">Status</CText>

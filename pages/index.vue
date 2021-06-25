@@ -12,11 +12,7 @@
         A11y testing with axe
       </CHeading>
       <c-box m="10">
-        <c-box
-          mr="10"
-        >
-          <app-form @submit="onSubmit" />
-        </c-box>
+        <app-form @submit="onSubmit" />
         <c-box mt="10">
           <CButton @click="getResult">
             Results

@@ -4,7 +4,7 @@
     p="10"
   >
     <form @submit.prevent>
-      <c-simple-grid columns="2" spacing="40px">
+      <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
         <CFormControl py="2">
           <c-form-label for="pages">Pages</c-form-label>
           <c-textarea
@@ -43,7 +43,7 @@
         Axe config
       </CHeading>
       <CDivider />
-      <c-simple-grid columns="2" spacing="40px">
+      <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
         <CFormControl py="2">
           <c-form-label for="reporter">Reporter</c-form-label>
           <c-input
@@ -58,7 +58,7 @@
         Viewport
       </CHeading>
       <CDivider />
-      <c-simple-grid columns="2" spacing="40px">
+      <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
         <CFormControl py="2">
           <c-form-label for="width">Width (px)</c-form-label>
           <c-input
@@ -83,7 +83,7 @@
         Basic auth configuration
       </CHeading>
       <CDivider />
-      <c-simple-grid columns="2" spacing="40px">
+      <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
         <CFormControl py="2">
           <c-form-label for="username">Username</c-form-label>
           <c-input
@@ -103,7 +103,7 @@
         </CFormControl>
       </c-simple-grid>
 
-      <c-simple-grid columns="2" spacing="40px">
+      <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
         <CButton @click="onSubmit" mt="2" variant-color="blue">
           Send
         </CButton>
