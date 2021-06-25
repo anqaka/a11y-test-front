@@ -1,90 +1,120 @@
 <template>
-  <form @submit.prevent>
-    <CFormControl py="2">
-      <c-form-label for="pages">Pages</c-form-label>
-      <c-textarea
-        required
-        placeholder="Pages"
-        id="pages"
-        v-model="form.pages"
-      />
-      <c-form-helper-text>Divide pages with comma</c-form-helper-text>
-    </CFormControl>
-    <CFormControl py="2">
-      <c-form-label for="title">Title</c-form-label>
-      <c-input placeholder="Title" id="title" v-model="form.title" />
-    </CFormControl>
-    <CFormControl py="2">
-      <c-form-label for="fileName">Filename</c-form-label>
-      <c-input placeholder="Filename" id="fileName" v-model="form.fileName" />
-    </CFormControl>
-    <CFormControl py="2">
-      <c-form-label for="resultsDir">Results dir</c-form-label>
-      <c-input placeholder="Title" id="resultsDir" v-model="form.resultsDir" />
-    </CFormControl>
-    <CHeading as="h2" size="sm" pt="4">
-      Axe config
-    </CHeading>
-    <CDivider />
-    <CFormControl py="2">
-      <c-form-label for="reporter">Reporter</c-form-label>
-      <c-input
-        placeholder="Reporter"
-        id="reporter"
-        v-model="form.axeConfig.reporter"
-      />
-    </CFormControl>
-    <CHeading as="h2" size="sm" pt="4">
-      Viewport
-    </CHeading>
-    <CDivider />
-    <CFormControl py="2">
-      <c-form-label for="width">Width (px)</c-form-label>
-      <c-input
-        type="number"
-        placeholder="Width"
-        id="width"
-        v-model="form.viewport.width"
-      />
-    </CFormControl>
-    <CFormControl py="2">
-      <c-form-label for="height">Height (px)</c-form-label>
-      <c-input
-        type="number"
-        placeholder="Height"
-        id="height"
-        v-model="form.viewport.height"
-      />
-    </CFormControl>
-    <CHeading as="h2" size="sm" pt="4">
-      Basic auth configuration
-    </CHeading>
-    <CDivider />
-    <CFormControl py="2">
-      <c-form-label for="username">Username</c-form-label>
-      <c-input
-        placeholder="Username"
-        id="username"
-        v-model="form.basicAuth.username"
-      />
-    </CFormControl>
-    <CFormControl py="2">
-      <c-form-label for="password">Password</c-form-label>
-      <c-input
-        type="password"
-        placeholder="Password"
-        id="password"
-        v-model="form.basicAuth.password"
-      />
-    </CFormControl>
-    <CButton @click="onSubmit">
-      Send
-    </CButton>
-  </form>
+  <c-box
+    boxShadow=" 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+    p="10"
+  >
+    <form @submit.prevent>
+      <c-simple-grid columns="2" spacing="40px">
+        <CFormControl py="2">
+          <c-form-label for="pages">Pages</c-form-label>
+          <c-textarea
+            required
+            placeholder="Pages"
+            id="pages"
+            v-model="form.pages"
+          />
+          <c-form-helper-text>Divide pages with comma</c-form-helper-text>
+        </CFormControl>
+        <c-box>
+          <CFormControl py="2">
+            <c-form-label for="title">Title</c-form-label>
+            <c-input placeholder="Title" id="title" v-model="form.title" />
+          </CFormControl>
+          <CFormControl py="2">
+            <c-form-label for="fileName">Filename</c-form-label>
+            <c-input
+              placeholder="Filename"
+              id="fileName"
+              v-model="form.fileName"
+            />
+          </CFormControl>
+          <CFormControl py="2">
+            <c-form-label for="resultsDir">Results dir</c-form-label>
+            <c-input
+              placeholder="Title"
+              id="resultsDir"
+              v-model="form.resultsDir"
+            />
+          </CFormControl>
+        </c-box>
+      </c-simple-grid>
+
+      <CHeading as="h2" size="sm" pt="4">
+        Axe config
+      </CHeading>
+      <CDivider />
+      <c-simple-grid columns="2" spacing="40px">
+        <CFormControl py="2">
+          <c-form-label for="reporter">Reporter</c-form-label>
+          <c-input
+            placeholder="Reporter"
+            id="reporter"
+            v-model="form.axeConfig.reporter"
+          />
+        </CFormControl>
+      </c-simple-grid>
+
+      <CHeading as="h2" size="sm" pt="4">
+        Viewport
+      </CHeading>
+      <CDivider />
+      <c-simple-grid columns="2" spacing="40px">
+        <CFormControl py="2">
+          <c-form-label for="width">Width (px)</c-form-label>
+          <c-input
+            type="number"
+            placeholder="Width"
+            id="width"
+            v-model="form.viewport.width"
+          />
+        </CFormControl>
+        <CFormControl py="2">
+          <c-form-label for="height">Height (px)</c-form-label>
+          <c-input
+            type="number"
+            placeholder="Height"
+            id="height"
+            v-model="form.viewport.height"
+          />
+        </CFormControl>
+      </c-simple-grid>
+
+      <CHeading as="h2" size="sm" pt="4">
+        Basic auth configuration
+      </CHeading>
+      <CDivider />
+      <c-simple-grid columns="2" spacing="40px">
+        <CFormControl py="2">
+          <c-form-label for="username">Username</c-form-label>
+          <c-input
+            placeholder="Username"
+            id="username"
+            v-model="form.basicAuth.username"
+          />
+        </CFormControl>
+        <CFormControl py="2">
+          <c-form-label for="password">Password</c-form-label>
+          <c-input
+            type="password"
+            placeholder="Password"
+            id="password"
+            v-model="form.basicAuth.password"
+          />
+        </CFormControl>
+      </c-simple-grid>
+
+      <c-simple-grid columns="2" spacing="40px">
+        <CButton @click="onSubmit" mt="2" variant-color="blue">
+          Send
+        </CButton>
+      </c-simple-grid>
+    </form>
+  </c-box>
 </template>
 
 <script>
 import {
+  CBox,
   CFormControl,
   CFormLabel,
   CInput,
@@ -92,11 +122,13 @@ import {
   CFormHelperText,
   CDivider,
   CHeading,
-  CButton
+  CButton,
+  CSimpleGrid
 } from '@chakra-ui/vue'
 
 export default {
   components: {
+    CBox,
     CFormControl,
     CFormLabel,
     CFormHelperText,
@@ -104,26 +136,27 @@ export default {
     CInput,
     CDivider,
     CHeading,
-    CButton
+    CButton,
+    CSimpleGrid
   },
 
   data() {
     return {
       form: {
-        pages: [],
+        pages: '',
         title: '',
         fileName: '',
         resultsDir: '',
         basicAuth: {
-          username: '',
-          password: ''
+          username: null,
+          password: null
         },
         axeConfig: {
           reporter: ''
         },
         viewport: {
-          width: null,
-          height: null
+          width: '',
+          height: ''
         }
       }
     };

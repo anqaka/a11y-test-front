@@ -11,13 +11,18 @@
       <CHeading text-align="center" mb="4">
         A11y testing with axe
       </CHeading>
-      <c-box
-        :w="['100vw', '30vw']"
-        boxShadow=" 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
-        p="10"
-        mr="10"
-      >
-        <app-form @submit="onSubmit" />
+      <c-box m="10">
+        <c-box
+          mr="10"
+        >
+          <app-form @submit="onSubmit" />
+        </c-box>
+        <c-box mt="10">
+          <CButton @click="getResult">
+            Results
+          </CButton>
+          <results-list :result="result" />
+        </c-box>
       </c-box>
     </c-box>
   </div>
@@ -26,16 +31,21 @@
 <script lang="js">
 import {
   CBox,
-  CHeading
+  CHeading,
+  CButton
 } from '@chakra-ui/vue'
+import axios from 'axios'
 
 export default {
   name: 'App',
   components: {
     CBox,
-    CHeading
+    CHeading,
+    CButton
   },
+
   inject: ['$chakraColorMode', '$toggleColorMode'],
+
   data () {
     return {
       showModal: false,
