@@ -1,4 +1,10 @@
+const isProd = process.env.NODE_ENV === 'production'
+const axe = isProd ? '' : 'http://localhost:3737'
+
 export default {
+  env: {
+    axe
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'a11y-test-front',
