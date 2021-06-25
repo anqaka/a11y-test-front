@@ -3,7 +3,7 @@
     boxShadow=" 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
     mb="4"
   >
-    <CSimpleGrid :columns="[1, null, 3, 6]" mb="4" p="4" bg="gray.200">
+    <CSimpleGrid :columns="[1, null, 3, 5]" mb="4" p="4" bg="gray.200">
       <c-box>
         <CText fontSize="sm">Id</CText>
         <CText fontWeight="800" py="2">{{ item.uid || item.id }}</CText>
@@ -14,12 +14,12 @@
           {{ item.testedUrl }}</CText
         >
       </c-box>
-      <c-box>
+      <!-- <c-box>
         <CText fontSize="sm">Url Category</CText>
         <CText fontWeight="800" py="2" is-truncated>
           {{ item.urlCategory }}</CText
         >
-      </c-box>
+      </c-box> -->
       <c-box>
         <CText fontSize="sm">Category</CText>
         <CText fontWeight="800" py="2"> {{ item.category }}</CText>
@@ -91,42 +91,28 @@
     </c-box>
 
     <c-box p="4">
-      <c-box
-        py="4"
-        tabindex="-1"
-        @click="show = !show"
-        d="flex"
-        direction="row"
-        justify-content="space-between"
-        fontWeight="800"
-      >
-        Additional informations
-        <c-icon :name="show ? 'chevron-up' : 'chevron-down'" />
-      </c-box>
-      <c-collapse :is-open="show" fontSize="sm">
-        <c-box>
-          <c-box pb="2">
-            <CText fontSize="sm" fontWeight="800">Any</CText>
-            {{ item.any }}
-          </c-box>
-          <c-box pb="2">
-            <CText fontSize="sm" fontWeight="800">All</CText>
-            {{ item.all }}
-          </c-box>
-          <c-box pb="2">
-            <CText fontSize="sm" fontWeight="800">None</CText>
-            {{ item.none }}
-          </c-box>
-          <c-box pb="2">
-            <CText fontSize="sm" fontWeight="800">Html</CText>
-            {{ item.html }}
-          </c-box>
-          <c-box pb="2" v-if="item.target">
-            <CText fontSize="sm" fontWeight="800">Target</CText>
-            {{ item.target.join(', ') }}
-          </c-box>
+      <c-box fontSize="sm" my="2">
+        <c-box pb="2">
+          <CText fontSize="sm" fontWeight="800">Any</CText>
+          <pre style="white-space: break-spaces;">{{ item.any }}</pre>
         </c-box>
-      </c-collapse>
+        <c-box pb="2">
+          <CText fontSize="sm" fontWeight="800">All</CText>
+          <pre style="white-space: break-spaces;">{{ item.all }}</pre>
+        </c-box>
+        <c-box pb="2">
+          <CText fontSize="sm" fontWeight="800">None</CText>
+          <pre style="white-space: break-spaces;">{{ item.none }}</pre>
+        </c-box>
+        <c-box pb="2">
+          <CText fontSize="sm" fontWeight="800">Html</CText>
+          <pre style="white-space: break-spaces;">{{ item.html }}</pre>
+        </c-box>
+        <c-box pb="2" v-if="item.target">
+          <CText fontSize="sm" fontWeight="800">Target</CText>
+          <pre style="white-space: break-spaces;">{{ item.target.join(', ') }}</pre>
+        </c-box>
+      </c-box>
     </c-box>
   </c-box>
 </template>
@@ -141,9 +127,8 @@ import {
   CGrid,
   CGridItem,
   CDivider,
-  CCollapse,
-  CIcon
-} from "@chakra-ui/vue";
+  CHeading
+} from '@chakra-ui/vue'
 
 export default {
   components: {
@@ -155,8 +140,7 @@ export default {
     CGrid,
     CGridItem,
     CDivider,
-    CCollapse,
-    CIcon
+    CHeading
   },
 
   props: {

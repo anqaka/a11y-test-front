@@ -13,7 +13,7 @@
             id="pages"
             v-model="form.pages"
           />
-          <c-form-helper-text>Divide pages with comma</c-form-helper-text>
+          <c-form-helper-text>Please divide pages with comma and space</c-form-helper-text>
         </CFormControl>
         <c-box>
           <CFormControl py="2">
@@ -164,7 +164,9 @@ export default {
 
   methods: {
     onSubmit() {
-      this.$emit('submit', this.form);
+      const data = Object.assign({}, this.form)
+      data.pages = this.form.pages.split(', ')
+      this.$emit('submit', data);
     }
   }
 };
