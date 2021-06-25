@@ -5,15 +5,12 @@
   >
     <form @submit.prevent>
       <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
-        <CFormControl py="2">
+        <CFormControl py="2" isRequired>
           <c-form-label for="pages">Pages</c-form-label>
-          <c-textarea
-            required
-            placeholder="Pages"
-            id="pages"
-            v-model="form.pages"
-          />
-          <c-form-helper-text>Please divide pages with comma and space</c-form-helper-text>
+          <c-textarea placeholder="Pages" id="pages" v-model="form.pages" />
+          <c-form-helper-text
+            >Please divide pages with comma and space
+          </c-form-helper-text>
         </CFormControl>
         <c-box>
           <CFormControl py="2">
@@ -104,7 +101,12 @@
       </c-simple-grid>
 
       <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
-        <CButton @click="onSubmit" mt="2" variant-color="blue">
+        <CButton
+          @click="onSubmit"
+          mt="2"
+          variant-color="blue"
+          :disabled="disabled"
+        >
           Send
         </CButton>
       </c-simple-grid>
@@ -143,31 +145,74 @@ export default {
   data() {
     return {
       form: {
-        pages: '',
-        title: '',
-        fileName: '',
-        resultsDir: '',
+        pages: null,
+        title: null,
+        fileName: null,
+        resultsDir: null,
         basicAuth: {
           username: null,
           password: null
         },
         axeConfig: {
-          reporter: ''
+          reporter: null
         },
         viewport: {
-          width: '',
-          height: ''
+          width: null,
+          height: null
         }
       }
     };
   },
 
+  computed: {
+    disabled() {
+      return (
+        !this.form.pages
+      );
+    }
+  },
+
   methods: {
     onSubmit() {
-      const data = Object.assign({}, this.form)
-      data.pages = this.form.pages.split(', ')
-      this.$emit('submit', data);
+      const form = this.form
+      const data = {
+        ...form,
+        pages: form.pages.split(', '),
+        title: form.title || undefined,
+        fileName: form.fileName || undefined,
+        resultsDir: form.resultsDir || undefined,
+        basicAuth:
+          form.basicAuth.username && form.basicAuth.password
+            ? form.basicAuth : undefined,
+        axeConfig: form.axeConfig.reporter ? form.axeConfig : undefined,
+        viewport:
+          form.viewport.width && form.viewport.height
+            ? form.viewport
+            : undefined
+      }
+      this.$emit('submit', data)
+      this.clear()
+    },
+
+    clear() {
+      this.form = {
+        pages: null,
+        title: null,
+        fileName: null,
+        resultsDir: null,
+        basicAuth: {
+          username: null,
+          password: null
+        },
+        axeConfig: {
+          reporter: null
+        },
+        viewport: {
+          width: null,
+          height: null
+        }
+      }
     }
   }
-};
+}
 </script>
