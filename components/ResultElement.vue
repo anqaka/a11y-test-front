@@ -85,28 +85,27 @@
     </c-box>
 
     <c-box p="4">
-      <c-box fontSize="sm" my="2">
-        <c-box pb="2">
-          <CText fontSize="sm" fontWeight="800">Any</CText>
-          <pre style="white-space: break-spaces;">{{ item.any }}</pre>
+      <node-element
+        v-if="item && !item.nodes"
+        :any="item.any"
+        :all="item.all"
+        :none="item.none"
+        :html="item.html"
+        :target="item.target"
+      />
+
+      <template v-else-if="item && item.nodes.length">
+        <c-box v-for="(node, id) in item.nodes" :key="id">
+          <node-element
+            :any="node.any"
+            :all="node.all"
+            :none="node.none"
+            :html="node.html"
+            :target="node.target"
+          />
+          <CDivider />
         </c-box>
-        <c-box pb="2">
-          <CText fontSize="sm" fontWeight="800">All</CText>
-          <pre style="white-space: break-spaces;">{{ item.all }}</pre>
-        </c-box>
-        <c-box pb="2">
-          <CText fontSize="sm" fontWeight="800">None</CText>
-          <pre style="white-space: break-spaces;">{{ item.none }}</pre>
-        </c-box>
-        <c-box pb="2">
-          <CText fontSize="sm" fontWeight="800">Html</CText>
-          <pre style="white-space: break-spaces;">{{ item.html }}</pre>
-        </c-box>
-        <c-box pb="2" v-if="item.target">
-          <CText fontSize="sm" fontWeight="800">Target</CText>
-          <pre style="white-space: break-spaces;">{{ item.target.join(', ') }}</pre>
-        </c-box>
-      </c-box>
+      </template>
     </c-box>
   </c-box>
 </template>
@@ -118,7 +117,8 @@ import {
   CText,
   CLink,
   CGrid,
-  CGridItem
+  CGridItem,
+  CDivider
 } from '@chakra-ui/vue'
 
 export default {
@@ -128,7 +128,8 @@ export default {
     CText,
     CLink,
     CGrid,
-    CGridItem
+    CGridItem,
+    CDivider
   },
 
   props: {
