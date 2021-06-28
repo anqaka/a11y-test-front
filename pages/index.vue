@@ -36,6 +36,7 @@
         </c-box>
       </c-box>
     </c-box>
+    <scroll-to-top />
   </div>
 </template>
 

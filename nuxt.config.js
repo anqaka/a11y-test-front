@@ -45,7 +45,8 @@ export default {
     // https://go.nuxtjs.dev/emotion
     '@nuxtjs/emotion',
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/svg'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
