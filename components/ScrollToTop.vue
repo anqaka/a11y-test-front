@@ -24,7 +24,7 @@ export default {
       visible: false
     }
   },
-  created () {
+  mounted () {
     window.addEventListener('scroll', () => {
       this.visible = window.scrollY > 400
     })
