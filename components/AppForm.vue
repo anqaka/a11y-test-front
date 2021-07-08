@@ -1,128 +1,229 @@
 <template>
-  <c-box
-    boxShadow=" 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+  <CBox
+    boxShadow="0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
     p="10"
   >
     <form @submit.prevent>
-      <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
-        <CFormControl py="2" isRequired>
-          <c-form-label for="pages">Pages</c-form-label>
-          <c-textarea placeholder="Pages" id="pages" v-model="form.pages" />
-          <c-form-helper-text>
-            Please divide pages separated with comma and space, without quotes
-          </c-form-helper-text>
-        </CFormControl>
-        <c-box>
+      <!-- Pages config -->
+      <CBox my="4" pb="6">
+        <CHeading as="h2" size="sm" pt="4">
+          Pages
+        </CHeading>
+        <CDivider />
+        <CBox
+          v-for="(item, index) in form.pages"
+          :key="index"
+          d="flex"
+        >
+          <CFlex
+            justify="flex-end"
+            wrap="wrap"
+            w="100%"
+          >
+            <CFormControl
+              py="2"
+              :isRequired="index === 0"
+              w="100%"
+            >
+              <CFormLabel :for="`url-${index}`">
+                Url
+              </CFormLabel>
+              <CInput
+                :id="`url-${index}`"
+                v-model="form.pages[index].url"
+                placeholder="url"
+                :name="`url-${index}`"
+              />
+            </CFormControl>
+            <CFormControl py="2" :w="['100%', null, '50%']">
+              <CFormLabel :for="`selector-${index}`">
+                HTML selector
+              </CFormLabel>
+              <CInput
+                :id="`selector-${index}`"
+                v-model="form.pages[index].selector"
+                placeholder="HTML selector"
+                :name="`selector-${index}`"
+              />
+              <CFormHelperText>
+                use .class or #id to choose selector to test, just one selector allowed. If empty whole document will be tested.
+              </CFormHelperText>
+            </CFormControl>
+          </CFlex>
+          <CButton
+            v-if="index !== 0"
+            mt="10"
+            mx="4"
+            @click="removePage"
+          >
+            Remove page
+          </CButton>
+        </CBox>
+        <CButton @click="addPage">
+          Add another page
+        </CButton>
+      </CBox>
+
+      <!-- General config -->
+      <CFlex :wrap="['wrap', null, 'nowrap']" justify="space-between">
+        <CHeading as="h2" size="sm" pt="4" :width="['100%', null, 'auto']">
+          General
+        </CHeading>
+        <CButton
+          variant-color="blue"
+          :width="['100%', null, 'auto']"
+          @click="generalShow = !generalShow"
+        >
+          Toggle
+        </CButton>
+      </CFlex>
+      <CDivider />
+      <CCollapse :is-open="generalShow">
+        <CSimpleGrid :columns="[1, null, 2]" spacing-x="40px">
           <CFormControl py="2">
-            <c-form-label for="title">Title</c-form-label>
-            <c-input placeholder="Title" id="title" v-model="form.title" />
+            <CFormLabel for="title">
+              Audit title
+            </CFormLabel>
+            <CInput
+              id="title"
+              v-model="form.title"
+              placeholder="Title"
+            />
           </CFormControl>
           <CFormControl py="2">
-            <c-form-label for="fileName">Filename</c-form-label>
-            <c-input
-              placeholder="Filename"
+            <CFormLabel for="fileName">
+              Export filename
+            </CFormLabel>
+            <CInput
               id="fileName"
               v-model="form.fileName"
+              placeholder="Filename"
             />
           </CFormControl>
           <CFormControl py="2">
-            <c-form-label for="resultsDir">Results dir</c-form-label>
-            <c-input
-              placeholder="Result directory name"
+            <CFormLabel for="resultsDir">
+              Results dir
+            </CFormLabel>
+            <CInput
               id="resultsDir"
               v-model="form.resultsDir"
+              placeholder="Result directory name"
+            />
+          </CFormControl>
+        </CSimpleGrid>
+      </CCollapse>
+
+      <!-- Axe options config -->
+      <CFlex :wrap="['wrap', null, 'nowrap']" justify="space-between">
+        <CHeading as="h2" size="sm" pt="4" :width="['100%', null, 'auto']">
+          Axe Config
+        </CHeading>
+        <CButton
+          variant-color="blue"
+          :width="['100%', null, 'auto']"
+          @click="axeConfigShow = !axeConfigShow"
+        >
+          Toggle
+        </CButton>
+      </CFlex>
+      <CDivider />
+      <CCollapse :is-open="axeConfigShow">
+        <CSimpleGrid :columns="[1, null, 2]" spacing-x="40px">
+          <CFormControl py="2">
+            <CFormLabel for="reporter">
+              Reporter
+            </CFormLabel>
+            <CInput
+              id="reporter"
+              v-model="form.axeConfig.reporter"
+              placeholder="Reporter"
+            />
+          </CFormControl>
+        </CSimpleGrid>
+
+        <CHeading as="h2" size="sm" pt="4">
+          Viewport
+        </CHeading>
+        <CDivider />
+        <CSimpleGrid :columns="[1, null, 2]" spacing-x="40px">
+          <CFormControl py="2">
+            <CFormLabel for="width">
+              Width (px)
+            </CFormLabel>
+            <CInput
+              id="width"
+              v-model="form.viewport.width"
+              type="number"
+              placeholder="Width"
             />
           </CFormControl>
           <CFormControl py="2">
-            <c-form-label for="selector">HTML Selector</c-form-label>
-            <c-input
-              placeholder="Html selector"
-              id="selector"
-              v-model="form.selector"
+            <CFormLabel for="height">
+              Height (px)
+            </CFormLabel>
+            <CInput
+              id="height"
+              v-model="form.viewport.height"
+              type="number"
+              placeholder="Height"
             />
-            <c-form-helper-text>
-              use .class or #id to choose selector to test, just one selector allowed
-            </c-form-helper-text>
           </CFormControl>
-        </c-box>
-      </c-simple-grid>
+        </CSimpleGrid>
+      </CCollapse>
 
-      <CHeading as="h2" size="sm" pt="4">
-        Axe config
-      </CHeading>
-      <CDivider />
-      <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
-        <CFormControl py="2">
-          <c-form-label for="reporter">Reporter</c-form-label>
-          <c-input
-            placeholder="Reporter"
-            id="reporter"
-            v-model="form.axeConfig.reporter"
-          />
-        </CFormControl>
-      </c-simple-grid>
-
-      <CHeading as="h2" size="sm" pt="4">
-        Viewport
-      </CHeading>
-      <CDivider />
-      <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
-        <CFormControl py="2">
-          <c-form-label for="width">Width (px)</c-form-label>
-          <c-input
-            type="number"
-            placeholder="Width"
-            id="width"
-            v-model="form.viewport.width"
-          />
-        </CFormControl>
-        <CFormControl py="2">
-          <c-form-label for="height">Height (px)</c-form-label>
-          <c-input
-            type="number"
-            placeholder="Height"
-            id="height"
-            v-model="form.viewport.height"
-          />
-        </CFormControl>
-      </c-simple-grid>
-
-      <CHeading as="h2" size="sm" pt="4">
-        Basic auth configuration
-      </CHeading>
-      <CDivider />
-      <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
-        <CFormControl py="2">
-          <c-form-label for="username">Username</c-form-label>
-          <c-input
-            placeholder="Username"
-            id="username"
-            v-model="form.basicAuth.username"
-          />
-        </CFormControl>
-        <CFormControl py="2">
-          <c-form-label for="password">Password</c-form-label>
-          <c-input
-            type="password"
-            placeholder="Password"
-            id="password"
-            v-model="form.basicAuth.password"
-          />
-        </CFormControl>
-      </c-simple-grid>
-
-      <c-simple-grid :columns="[1, null, 2]" spacing-x="40px">
+      <!-- BAsic auth config -->
+      <CFlex :wrap="['wrap', null, 'nowrap']" justify="space-between">
+        <CHeading as="h2" size="sm" pt="4" :width="['100%', null, 'auto']">
+          Basic Auth configuration
+        </CHeading>
         <CButton
-          @click="onSubmit"
+          variant-color="blue"
+          :width="['100%', null, 'auto']"
+          :mt="[4, 0]"
+          @click="basicAuthShow = !basicAuthShow"
+        >
+          Toggle
+        </CButton>
+      </CFlex>
+      <CDivider />
+      <CCollapse :is-open="basicAuthShow">
+        <CSimpleGrid :columns="[1, null, 2]" spacing-x="40px">
+          <CFormControl py="2">
+            <CFormLabel for="username">
+              Username
+            </CFormLabel>
+            <CInput
+              id="username"
+              v-model="form.basicAuth.username"
+              placeholder="Username"
+            />
+          </CFormControl>
+          <CFormControl py="2">
+            <CFormLabel for="password">
+              Password
+            </CFormLabel>
+            <CInput
+              id="password"
+              v-model="form.basicAuth.password"
+              type="password"
+              placeholder="Password"
+            />
+          </CFormControl>
+        </CSimpleGrid>
+      </CCollapse>
+
+      <CSimpleGrid :columns="[1, null, 2]" spacing-x="40px">
+        <CButton
           mt="2"
           variant-color="blue"
           :disabled="disabled"
+          @click="onSubmit"
         >
           Send
         </CButton>
-      </c-simple-grid>
+      </CSimpleGrid>
     </form>
-  </c-box>
+  </CBox>
 </template>
 
 <script>
@@ -131,7 +232,6 @@ import {
   CFormControl,
   CFormLabel,
   CInput,
-  CTextarea,
   CFormHelperText,
   CDivider,
   CHeading,
@@ -145,7 +245,6 @@ export default {
     CFormControl,
     CFormLabel,
     CFormHelperText,
-    CTextarea,
     CInput,
     CDivider,
     CHeading,
@@ -156,10 +255,15 @@ export default {
   data () {
     return {
       form: {
-        pages: null,
-        title: null,
-        fileName: null,
-        resultsDir: null,
+        pages: [
+          {
+            url: null,
+            selector: null
+          }
+        ],
+        title: undefined,
+        fileName: undefined,
+        resultsDir: undefined,
         basicAuth: {
           username: null,
           password: null
@@ -171,7 +275,10 @@ export default {
           width: null,
           height: null
         }
-      }
+      },
+      generalShow: true,
+      axeConfigShow: false,
+      basicAuthShow: false
     }
   },
 
@@ -188,10 +295,10 @@ export default {
       const form = this.form
       const data = {
         ...form,
-        pages: form.pages.split(', '),
-        title: form.title || undefined,
-        fileName: form.fileName || undefined,
-        resultsDir: form.resultsDir || undefined,
+        // pages: form.pages || undefined,
+        // title: form.title || undefined,
+        // fileName: form.fileName || undefined,
+        // resultsDir: form.resultsDir || undefined,
         basicAuth:
           form.basicAuth.username && form.basicAuth.password
             ? form.basicAuth
@@ -200,19 +307,32 @@ export default {
         viewport:
           form.viewport.width && form.viewport.height
             ? form.viewport
-            : undefined,
-        selector: form.selector || undefined
+            : undefined
       }
+      // console.log(data)
       this.$emit('submit', data)
-      this.clear()
+      // this.clear()
+    },
+
+    addPage () {
+      this.form.pages.push({ url: null, selector: null })
+    },
+
+    removePage () {
+      this.form.pages.pop()
     },
 
     clear () {
       this.form = {
-        pages: null,
-        title: null,
-        fileName: null,
-        resultsDir: null,
+        pages: [
+          {
+            url: null,
+            selector: null
+          }
+        ],
+        title: undefined,
+        fileName: undefined,
+        resultsDir: undefined,
         basicAuth: {
           username: null,
           password: null
@@ -223,8 +343,7 @@ export default {
         viewport: {
           width: null,
           height: null
-        },
-        selector: null
+        }
       }
     }
   }

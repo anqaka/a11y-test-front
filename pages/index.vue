@@ -21,16 +21,16 @@
             {{ title }}
           </CHeading>
           <c-box d="flex" direction="row" justify-content="space-between" my="4">
-            <CButton @click="getResult" w="200px">
+            <CButton w="200px" @click="getResult">
               Get results
             </CButton>
 
-          <CInputGroup>
-            <CInputLeftElement>
-              <CIcon name="search" color="gray.300" />
-            </CInputLeftElement>
-            <CInput v-model="search" placeholder="Search..." />
-          </CInputGroup>
+            <CInputGroup>
+              <CInputLeftElement>
+                <CIcon name="search" color="gray.300" />
+              </CInputLeftElement>
+              <CInput v-model="search" placeholder="Search..." />
+            </CInputGroup>
           </c-box>
           <results-list :title="result.title" :violations="violations" />
         </c-box>
@@ -97,7 +97,7 @@ export default {
     violations () {
       const violations = this.result.violations
       if (violations && violations.length && this.search) {
-        return violations.filter(item => {
+        return violations.filter((item) => {
           return Object.keys(item).some((key) => {
             return item[key].includes(this.search)
           })
